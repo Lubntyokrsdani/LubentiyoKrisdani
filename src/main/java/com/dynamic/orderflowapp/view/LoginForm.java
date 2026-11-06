@@ -3,7 +3,6 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package com.dynamic.orderflowapp.view;
-
 /**
  *
  * @author USER
@@ -140,14 +139,19 @@ public class LoginForm extends javax.swing.JFrame {
 
             java.sql.ResultSet rs = pst.executeQuery();
 
-            if (rs.next()) {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Login berhasil! Selamat Datang, " + username);
+if (rs.next()) {
 
-            } else {
-                javax.swing.JOptionPane.showMessageDialog(this,
-                        "Username atau password salah!");
-            }
+DashboardPanel dashboard = new DashboardPanel();
+
+dashboard.setLocationRelativeTo(null);
+dashboard.setVisible(true);
+
+this.dispose();
+
+} else {
+    javax.swing.JOptionPane.showMessageDialog(this,
+            "Username atau password salah!");
+}
 
             rs.close();
             pst.close();

@@ -1,6 +1,14 @@
+com\dynamic\orderflowapp\view\pages\DashboardPage$1.class
+com\dynamic\orderflowapp\view\pages\PelangganPage$1.class
+com\dynamic\orderflowapp\view\DashboardPanel$3.class
+com\dynamic\orderflowapp\view\DashboardPanel$1.class
+com\dynamic\orderflowapp\view\LoginForm$2.class
 com\dynamic\orderflowapp\OrderFlowAPP.class
 com\dynamic\orderflowapp\view\LoginForm$1.class
 com\dynamic\orderflowapp\view\LoginForm.class
-com\dynamic\orderflowapp\view\LoginForm$2.class
-com\dynamic\orderflowapp\view\LoginForm$3.class
+com\dynamic\orderflowapp\view\pages\PelangganPage.class
 com\dynamic\orderflowapp\view\LoginForm$4.class
+com\dynamic\orderflowapp\view\pages\DashboardPage.class
+com\dynamic\orderflowapp\view\DashboardPanel.class
+com\dynamic\orderflowapp\view\DashboardPanel$2.class
+com\dynamic\orderflowapp\view\LoginForm$3.class
