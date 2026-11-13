@@ -61,6 +61,7 @@ private void showPage(String page) {
         btnOrderTracking = new javax.swing.JButton();
         btnReportAnalytics = new javax.swing.JButton();
         jSeparator1 = new javax.swing.JSeparator();
+        btnLogOut = new javax.swing.JButton();
         MainPanel = new javax.swing.JPanel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -122,6 +123,16 @@ private void showPage(String page) {
             }
         });
 
+        btnLogOut.setBackground(new java.awt.Color(255, 51, 51));
+        btnLogOut.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnLogOut.setForeground(new java.awt.Color(255, 255, 255));
+        btnLogOut.setText("Logout");
+        btnLogOut.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLogOutActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout SidebarPanelLayout = new javax.swing.GroupLayout(SidebarPanel);
         SidebarPanel.setLayout(SidebarPanelLayout);
         SidebarPanelLayout.setHorizontalGroup(
@@ -132,17 +143,20 @@ private void showPage(String page) {
                         .addContainerGap()
                         .addComponent(jSeparator1))
                     .addGroup(SidebarPanelLayout.createSequentialGroup()
+                        .addGap(14, 14, 14)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(SidebarPanelLayout.createSequentialGroup()
                         .addGap(15, 15, 15)
                         .addGroup(SidebarPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(btnProductManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnDashboard, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnOrderManagement, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(btnOrderTracking, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(btnReportAnalytics, javax.swing.GroupLayout.PREFERRED_SIZE, 151, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(SidebarPanelLayout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                            .addGroup(SidebarPanelLayout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(btnLogOut, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(btnReportAnalytics, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         SidebarPanelLayout.setVerticalGroup(
@@ -162,7 +176,9 @@ private void showPage(String page) {
                 .addComponent(btnOrderTracking)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnReportAnalytics)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 232, Short.MAX_VALUE)
+                .addComponent(btnLogOut)
+                .addGap(23, 23, 23))
         );
 
         MainPanel.setBackground(new java.awt.Color(204, 204, 204));
@@ -206,6 +222,14 @@ showPage("order_tracking");
 showPage("report_analytics");
     }//GEN-LAST:event_btnReportAnalyticsActionPerformed
 
+    private void btnLogOutActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogOutActionPerformed
+    LoginForm loginform = new LoginForm();
+    loginform.setLocationRelativeTo(null);
+    loginform.setVisible(true);
+
+    this.dispose();
+    }//GEN-LAST:event_btnLogOutActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -245,6 +269,7 @@ showPage("report_analytics");
     private javax.swing.JPanel MainPanel;
     private javax.swing.JPanel SidebarPanel;
     private javax.swing.JButton btnDashboard;
+    private javax.swing.JButton btnLogOut;
     private javax.swing.JButton btnOrderManagement;
     private javax.swing.JButton btnOrderTracking;
     private javax.swing.JButton btnProductManagement;

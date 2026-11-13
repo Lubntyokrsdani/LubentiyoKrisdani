@@ -3,7 +3,16 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JPanel.java to edit this template
  */
 package com.dynamic.orderflowapp.view.pages;
+import com.dynamic.orderflowapp.config.SpringContext;
+import com.dynamic.orderflowapp.dao.ProductDAO;
+import com.dynamic.orderflowapp.entity.Product;
+import com.dynamic.orderflowapp.view.dialog.AddProductDialog;
+import com.dynamic.orderflowapp.view.dialog.AddCategoryDialog;
 
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+import java.awt.*;
+import java.util.List;
 /**
  *
  * @author user
@@ -13,10 +22,123 @@ public class Product_Management extends javax.swing.JPanel {
     /**
      * Creates new form Product_Management
      */
-    public Product_Management() {
-        initComponents();
-    }
+public Product_Management() {
+    initComponents();
 
+    setupTable();
+    loadProducts();
+
+    btnTambahProduct.addActionListener(e -> {
+        JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+        AddProductDialog dialog =
+                new AddProductDialog(parent, this::loadProducts);
+
+        dialog.setVisible(true);
+    });
+
+    btnTambahProduct1.addActionListener(e -> {
+        searchProducts();
+    });
+
+    TxtSearching.addActionListener(e -> searchProducts());
+}
+private void setupTable() {
+
+    DefaultTableModel model = new DefaultTableModel(
+        new Object[][]{},
+        new String[]{
+            "ID",
+            "Product Code",
+            "Product Name",
+            "Category",
+            "Price",
+            "Stock",
+            "Unit",
+            "Status"
+        }
+    ) {
+        @Override
+        public boolean isCellEditable(int row, int column) {
+            return false;
+        }
+    };
+
+    TabelData.setModel(model);
+    TabelData.setRowHeight(30);
+}
+private void loadProducts() {
+
+    try {
+
+        ProductDAO dao = SpringContext.getBean(ProductDAO.class);
+
+        List<Product> products = dao.findAll();
+
+        DefaultTableModel model =
+                (DefaultTableModel) TabelData.getModel();
+
+        model.setRowCount(0);
+
+        for (Product p : products) {
+
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getProductCode(),
+                p.getProductName(),
+                p.getCategory().getCategoryName(),
+                p.getPrice(),
+                p.getStock(),
+                p.getUnit(),
+                p.getStatus()
+            });
+        }
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Failed to load products: " + e.getMessage()
+        );
+    }
+}
+private void searchProducts() {
+
+    try {
+
+        String keyword = TxtSearching.getText().trim();
+
+        ProductDAO dao = SpringContext.getBean(ProductDAO.class);
+
+        List<Product> products = dao.search(keyword);
+
+        DefaultTableModel model =
+                (DefaultTableModel) TabelData.getModel();
+
+        model.setRowCount(0);
+
+        for (Product p : products) {
+
+            model.addRow(new Object[]{
+                p.getId(),
+                p.getProductCode(),
+                p.getProductName(),
+                p.getCategory().getCategoryName(),
+                p.getPrice(),
+                p.getStock(),
+                p.getUnit(),
+                p.getStatus()
+            });
+        }
+
+    } catch (Exception e) {
+
+        JOptionPane.showMessageDialog(
+                this,
+                "Search failed: " + e.getMessage()
+        );
+    }
+}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -26,9 +148,78 @@ public class Product_Management extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel1 = new javax.swing.JLabel();
+        lblTitle = new javax.swing.JLabel();
+        SubTitle = new javax.swing.JLabel();
+        lblSubTitle = new javax.swing.JLabel();
+        btnTambahProduct = new javax.swing.JButton();
+        PanelSearching = new javax.swing.JPanel();
+        TxtSearching = new javax.swing.JTextField();
+        btnTambahProduct1 = new javax.swing.JButton();
+        ScrollPanel = new javax.swing.JScrollPane();
+        TabelData = new javax.swing.JTable();
+        btnTambahCategory = new javax.swing.JButton();
 
-        jLabel1.setText("Ini Product management");
+        lblTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblTitle.setText("Product Management");
+
+        SubTitle.setText("Manage your product data and category");
+        SubTitle.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+
+        lblSubTitle.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lblSubTitle.setText("Product List");
+
+        btnTambahProduct.setBackground(new java.awt.Color(0, 102, 0));
+        btnTambahProduct.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahProduct.setText("+ Add Product");
+        btnTambahProduct.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahProductActionPerformed(evt);
+            }
+        });
+
+        PanelSearching.setBackground(new java.awt.Color(255, 255, 255));
+        PanelSearching.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        TxtSearching.setBorder(null);
+
+        javax.swing.GroupLayout PanelSearchingLayout = new javax.swing.GroupLayout(PanelSearching);
+        PanelSearching.setLayout(PanelSearchingLayout);
+        PanelSearchingLayout.setHorizontalGroup(
+            PanelSearchingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelSearchingLayout.createSequentialGroup()
+                .addGap(0, 25, Short.MAX_VALUE)
+                .addComponent(TxtSearching, javax.swing.GroupLayout.PREFERRED_SIZE, 359, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+        PanelSearchingLayout.setVerticalGroup(
+            PanelSearchingLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(TxtSearching, javax.swing.GroupLayout.DEFAULT_SIZE, 28, Short.MAX_VALUE)
+        );
+
+        btnTambahProduct1.setBackground(new java.awt.Color(51, 51, 51));
+        btnTambahProduct1.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahProduct1.setText("Search");
+
+        TabelData.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        ScrollPanel.setViewportView(TabelData);
+
+        btnTambahCategory.setBackground(new java.awt.Color(0, 153, 153));
+        btnTambahCategory.setForeground(new java.awt.Color(255, 255, 255));
+        btnTambahCategory.setText("+ Add Category");
+        btnTambahCategory.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTambahCategoryActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -36,20 +227,74 @@ public class Product_Management extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(PanelSearching, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnTambahProduct1)
+                        .addGap(28, 64, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(ScrollPanel)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(lblTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(SubTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(0, 0, Short.MAX_VALUE)))
+                        .addContainerGap())
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(lblSubTitle, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnTambahProduct)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnTambahCategory)
+                        .addGap(3, 3, 3))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel1)
-                .addContainerGap(278, Short.MAX_VALUE))
+                .addComponent(lblTitle)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(SubTitle)
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblSubTitle)
+                    .addComponent(btnTambahProduct)
+                    .addComponent(btnTambahCategory))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(btnTambahProduct1)
+                    .addComponent(PanelSearching, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(ScrollPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(14, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnTambahCategoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahCategoryActionPerformed
+    JFrame parent = (JFrame) SwingUtilities.getWindowAncestor(this);
+
+    AddCategoryDialog dialog = new AddCategoryDialog(parent);
+
+    dialog.setVisible(true);
+    }//GEN-LAST:event_btnTambahCategoryActionPerformed
+
+    private void btnTambahProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTambahProductActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnTambahProductActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JPanel PanelSearching;
+    private javax.swing.JScrollPane ScrollPanel;
+    private javax.swing.JLabel SubTitle;
+    private javax.swing.JTable TabelData;
+    private javax.swing.JTextField TxtSearching;
+    private javax.swing.JButton btnTambahCategory;
+    private javax.swing.JButton btnTambahProduct;
+    private javax.swing.JButton btnTambahProduct1;
+    private javax.swing.JLabel lblSubTitle;
+    private javax.swing.JLabel lblTitle;
     // End of variables declaration//GEN-END:variables
 }
